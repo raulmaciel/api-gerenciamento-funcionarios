@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/collaborators")
 public class CollaboratorController {
@@ -23,5 +25,10 @@ public class CollaboratorController {
     @ResponseStatus(HttpStatus.CREATED)
     public MessageResponseDto createCollaborator(@RequestBody @Valid final CollaboratorDto collaboratorDto){
        return collaboratorService.createCollaborator(collaboratorDto);
+    }
+
+    @GetMapping
+    public List<CollaboratorDto> listAll(){
+        return collaboratorService.listAll();
     }
 }
