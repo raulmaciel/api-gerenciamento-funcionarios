@@ -27,8 +27,12 @@ public class CollaboratorService {
         Collaborator collaboratorToSave = collaboratorMapper.toModel(collaboratorDto);
         Collaborator savedCollaborator = collaboratorRepository.save(collaboratorToSave);
 
+        return createMessageResponse("Created collaborator with ID ", savedCollaborator.getId());
+    }
+
+    private static MessageResponseDto createMessageResponse(String message, Long id) {
         return MessageResponseDto.builder()
-                .message("Created collaborator with ID " + savedCollaborator.getId())
+                .message(message + id)
                 .build();
     }
 
@@ -50,7 +54,16 @@ public class CollaboratorService {
         collaboratorRepository.deleteById(id);
     }
 
+
     @Transactional
+    public MessageResponseDto updateById(Long id, CollaboratorDto collaboratorDto) throws CollaboratorNotFoundException {
+        verifyIfExists(id);
+        Collaborator collaboratorToUpdate = collaboratorMapper.toModel(collaboratorDto);
+        Collaborator updatedModel = collaboratorRepository.save(collaboratorToUpdate);
+        return createMessageResponse("Updated collaborator with ID ", id);
+    }
+
+
     private Collaborator verifyIfExists(Long id) throws CollaboratorNotFoundException {
         return collaboratorRepository.findById(id).orElseThrow(() -> new CollaboratorNotFoundException(id));
     }
