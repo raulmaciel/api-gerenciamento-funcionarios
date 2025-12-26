@@ -38,4 +38,10 @@ public class CollaboratorController {
     public CollaboratorDto findById(@PathVariable Long id) throws CollaboratorNotFoundException {
         return collaboratorService.findById(id);
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable Long id) throws CollaboratorNotFoundException {
+        collaboratorService.deleteById(id);
+    }
 }

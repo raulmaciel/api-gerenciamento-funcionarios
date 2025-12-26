@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class CollaboratorService {
@@ -42,8 +40,19 @@ public class CollaboratorService {
 
     @Transactional
     public CollaboratorDto findById(Long id) throws CollaboratorNotFoundException {
-        Collaborator collaborator = collaboratorRepository.findById(id).orElseThrow(() -> new CollaboratorNotFoundException(id));
+        Collaborator collaborator = verifyIfExists(id);
         return collaboratorMapper.toDTO(collaborator);
+    }
+
+    @Transactional
+    public void deleteById(Long id) throws CollaboratorNotFoundException {
+        verifyIfExists(id);
+        collaboratorRepository.deleteById(id);
+    }
+
+    @Transactional
+    private Collaborator verifyIfExists(Long id) throws CollaboratorNotFoundException {
+        return collaboratorRepository.findById(id).orElseThrow(() -> new CollaboratorNotFoundException(id));
     }
 
 
