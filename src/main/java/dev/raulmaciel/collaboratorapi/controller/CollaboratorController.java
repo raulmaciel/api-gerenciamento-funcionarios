@@ -1,12 +1,12 @@
 package dev.raulmaciel.collaboratorapi.controller;
 
-import dev.raulmaciel.collaboratorapi.dto.CollaboratorDto;
+import dev.raulmaciel.collaboratorapi.dto.request.CollaboratorDto;
+import dev.raulmaciel.collaboratorapi.dto.response.MessageResponseDto;
 import dev.raulmaciel.collaboratorapi.entity.Collaborator;
-import dev.raulmaciel.collaboratorapi.repository.CollaboratorRepository;
 import dev.raulmaciel.collaboratorapi.service.CollaboratorService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,7 +21,7 @@ public class CollaboratorController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CollaboratorDto createCollaborator(@RequestBody final Collaborator collaborator){
-       return collaboratorService.createCollaborator(collaborator);
+    public MessageResponseDto createCollaborator(@RequestBody @Valid final CollaboratorDto collaboratorDto){
+       return collaboratorService.createCollaborator(collaboratorDto);
     }
 }

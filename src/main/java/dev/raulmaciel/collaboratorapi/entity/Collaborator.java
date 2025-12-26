@@ -1,6 +1,5 @@
 package dev.raulmaciel.collaboratorapi.entity;
 
-import dev.raulmaciel.collaboratorapi.dto.CollaboratorDto;
 import jakarta.persistence.*;
 import lombok.*;
 

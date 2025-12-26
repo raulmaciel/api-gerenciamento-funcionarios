@@ -1,7 +1,8 @@
 package dev.raulmaciel.collaboratorapi.service;
 
-import dev.raulmaciel.collaboratorapi.dto.CollaboratorDto;
 import dev.raulmaciel.collaboratorapi.dto.mapper.CollaboratorMapper;
+import dev.raulmaciel.collaboratorapi.dto.request.CollaboratorDto;
+import dev.raulmaciel.collaboratorapi.dto.response.MessageResponseDto;
 import dev.raulmaciel.collaboratorapi.entity.Collaborator;
 import dev.raulmaciel.collaboratorapi.repository.CollaboratorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,16 +11,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class CollaboratorService {
     private final CollaboratorRepository collaboratorRepository;
-    private final CollaboratorMapper collaboratorMapper;
+    private final CollaboratorMapper collaboratorMapper = CollaboratorMapper.INSTANCE;
 
     @Autowired
-    public CollaboratorService(CollaboratorRepository collaboratorRepository, CollaboratorMapper collaboratorMapper) {
+    public CollaboratorService(CollaboratorRepository collaboratorRepository) {
         this.collaboratorRepository = collaboratorRepository;
-        this.collaboratorMapper = collaboratorMapper;
     }
 
-    public CollaboratorDto createCollaborator(Collaborator collaborator) {
-        Collaborator savedCollaborator = collaboratorRepository.save(collaborator);
-        return collaboratorMapper.toDto(savedCollaborator);
+    public MessageResponseDto createCollaborator(CollaboratorDto collaboratorDto) {
+        Collaborator collaboratorToSave = collaboratorMapper.toModel(collaboratorDto);
+        Collaborator savedCollaborator = collaboratorRepository.save(collaboratorToSave);
+
+        return MessageResponseDto.builder()
+                .message("Created collaborator with ID " + savedCollaborator.getId())
+                .build();
     }
 }

@@ -1,16 +1,17 @@
 package dev.raulmaciel.collaboratorapi.dto.mapper;
 
-import dev.raulmaciel.collaboratorapi.dto.CollaboratorDto;
+import dev.raulmaciel.collaboratorapi.dto.request.CollaboratorDto;
 import dev.raulmaciel.collaboratorapi.entity.Collaborator;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
-@Component
-public class CollaboratorMapper {
-    public CollaboratorDto toDto(Collaborator collaborator){
-        return new CollaboratorDto(collaborator.getFirstName(),
-                collaborator.getLastName(),
-                collaborator.getCpf(),
-                collaborator.getBirthDate(),
-                collaborator.getPhones());
-    }
+@Mapper
+public interface CollaboratorMapper {
+    CollaboratorMapper INSTANCE = Mappers.getMapper(CollaboratorMapper.class);
+
+    @Mapping(target = "birthDate", source = "birthDate", dateFormat = "dd-MM-yyyy")
+    Collaborator toModel(CollaboratorDto collaboratorDto);
+
+    CollaboratorDto toDTO(Collaborator collaborator);
 }
