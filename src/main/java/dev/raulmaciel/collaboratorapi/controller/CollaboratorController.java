@@ -44,4 +44,9 @@ public class CollaboratorController {
     public void deleteById(@PathVariable Long id) throws CollaboratorNotFoundException {
         collaboratorService.deleteById(id);
     }
+
+    @PutMapping("/{id}")
+    public MessageResponseDto updateById(@PathVariable Long id, @RequestBody @Valid CollaboratorDto collaboratorDto) throws CollaboratorNotFoundException{
+        return collaboratorService.updateById(id, collaboratorDto);
+    }
 }
