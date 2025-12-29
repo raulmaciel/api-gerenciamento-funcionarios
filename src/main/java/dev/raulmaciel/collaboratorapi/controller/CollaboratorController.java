@@ -6,6 +6,7 @@ import dev.raulmaciel.collaboratorapi.entity.Collaborator;
 import dev.raulmaciel.collaboratorapi.exception.CollaboratorNotFoundException;
 import dev.raulmaciel.collaboratorapi.service.CollaboratorService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -15,17 +16,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/collaborators")
+@AllArgsConstructor(onConstructor_ = @__(@Autowired)) // Substitui a necessidade do construtor, que ao aumentar o n de atributos aumenta a qnt de escrita de cod.
 public class CollaboratorController {
     private CollaboratorService collaboratorService;
 
-    @Autowired
-    public CollaboratorController(CollaboratorService collaboratorService) {
-        this.collaboratorService = collaboratorService;
-    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public MessageResponseDto createCollaborator(@RequestBody @Valid final CollaboratorDto collaboratorDto){
+    public MessageResponseDto createCollaborator(@RequestBody @Validaaa final CollaboratorDto collaboratorDto){
        return collaboratorService.createCollaborator(collaboratorDto);
     }
 

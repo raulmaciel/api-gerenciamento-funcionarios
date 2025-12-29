@@ -7,20 +7,17 @@ import dev.raulmaciel.collaboratorapi.entity.Collaborator;
 import dev.raulmaciel.collaboratorapi.exception.CollaboratorNotFoundException;
 import dev.raulmaciel.collaboratorapi.repository.CollaboratorRepository;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor(onConstructor_ = @__(@Autowired))
 public class CollaboratorService {
     private final CollaboratorRepository collaboratorRepository;
     private final CollaboratorMapper collaboratorMapper = CollaboratorMapper.INSTANCE;
-
-    @Autowired
-    public CollaboratorService(CollaboratorRepository collaboratorRepository) {
-        this.collaboratorRepository = collaboratorRepository;
-    }
 
     @Transactional
     public MessageResponseDto createCollaborator(CollaboratorDto collaboratorDto) {
